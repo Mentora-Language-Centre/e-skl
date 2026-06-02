@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Sistem Informasi Kelulusan — SMP IT Madani Islamic School</title>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://i.ibb.co.com/HLBkGx7G/Chat-GPT-Image-Jun-2-2026-12-31-08-AM.png"
+    />
+
+    <meta
+      name="title"
+      content="Sistem Informasi Kelulusan — SMP IT Madani Islamic School"
+    />
+    <meta
+      name="description"
+      content="Sistem Informasi Kelulusan SMP IT Madani Islamic School untuk melihat dan mengakses hasil kelulusan peserta didik secara online."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://e-skl.madani.id" />
+    <meta
+      property="og:title"
+      content="Sistem Informasi Kelulusan — SMP IT Madani Islamic School"
+    />
+    <meta
+      property="og:description"
+      content="Sistem Informasi Kelulusan SMP IT Madani Islamic School untuk melihat dan mengakses hasil kelulusan peserta didik secara online."
+    />
+    <meta
+      property="og:image"
+      content="https://i.ibb.co.com/HLBkGx7G/Chat-GPT-Image-Jun-2-2026-12-31-08-AM.png"
+    />
+
+    <!-- X (Twitter) -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://e-skl.madani.id" />
+    <meta
+      property="twitter:title"
+      content="Sistem Informasi Kelulusan — SMP IT Madani Islamic School"
+    />
+    <meta
+      property="twitter:description"
+      content="Sistem Informasi Kelulusan SMP IT Madani Islamic School untuk melihat dan mengakses hasil kelulusan peserta didik secara online."
+    />
+    <meta
+      property="twitter:image"
+      content="https://i.ibb.co.com/HLBkGx7G/Chat-GPT-Image-Jun-2-2026-12-31-08-AM.png"
+    />
+
+    <!-- Meta Tags Generated with https://metatags.io -->
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              primary: "var(--color-primary)",
+              secondary: "var(--color-secondary)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- PENGGANTIAN LIBRARY: Library QR Code dihapus, cukup gunakan html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/locale/id.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      :root {
+        --color-primary: #2563eb;
+        --color-secondary: #1e40af;
+        --bg-image: url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop");
+      }
+      body {
+        background-color: #f3f4f6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .bg-dynamic {
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+          var(--bg-image);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      /* =======================================================
+           TEMPLATE SKL - DESAIN RESMI (A4, GARIS GANDA, RAPI)
+           Diposisikan absolut agar tidak terlihat user di web
+           Namun tetap bisa difoto oleh html2canvas
+        ======================================================== */
+      #skl-export-box {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+        width: 794px; /* Ukuran A4 96dpi */
+        min-height: 1123px;
+        background-color: #ffffff;
+        padding: 50px 60px;
+        box-sizing: border-box;
+        color: #000000;
+        font-family: "Times New Roman", Times, serif; /* Font resmi surat */
+        z-index: -100;
+        display: block !important;
+      }
+
+      .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--color-primary);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .view-hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center gap-3">
+            <img
+              id="nav-logo"
+              src=""
+              alt="Logo"
+              class="h-10 w-10 object-contain hidden"
+              crossorigin="anonymous"
+            />
+            <span
+              id="nav-title"
+              class="font-bold text-gray-800 text-lg sm:text-xl"
+              >E-Kelulusan</span
+            >
+          </div>
+          <div
+            id="nav-year"
+            class="text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full"
+          ></div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- App Container -->
+    <main class="flex-grow pt-16 flex flex-col">
+      <!-- VIEW: LOADING -->
+      <div
+        id="view-loading"
+        class="flex-grow flex flex-col items-center justify-center bg-white z-40 fixed inset-0"
+      >
+        <div class="loader mb-4"></div>
+        <p class="text-gray-500 font-medium">Menghubungkan ke sistem...</p>
+      </div>
+
+      <!-- VIEW: HOME -->
+      <div id="view-home" class="flex-grow flex flex-col view-hidden relative">
+        <div
+          class="bg-dynamic flex-grow flex items-center justify-center px-4 py-12"
+        >
+          <div
+            class="max-w-3xl w-full bg-white/10 backdrop-blur-lg rounded-3xl p-6 sm:p-10 shadow-2xl border border-white/20 text-center"
+          >
+            <img
+              id="hero-logo"
+              src=""
+              alt="Logo Sekolah"
+              class="h-24 w-24 mx-auto mb-4 object-contain hidden drop-shadow-lg"
+              crossorigin="anonymous"
+            />
+            <h1
+              id="hero-title"
+              class="text-3xl sm:text-4xl font-bold text-white mb-2 drop-shadow-md"
+            >
+              Pengumuman Kelulusan
+            </h1>
+            <p
+              id="hero-subtitle"
+              class="text-gray-200 mb-8 text-sm sm:text-base font-light"
+            >
+              Tahun Ajaran <span id="hero-year"></span>
+            </p>
+
+            <!-- Countdown -->
+            <div id="countdown-container" class="mb-8">
+              <p
+                class="text-white mb-4 text-sm font-medium tracking-widest uppercase"
+              >
+                Pengumuman akan dibuka dalam:
+              </p>
+              <div class="flex justify-center gap-3 sm:gap-6">
+                <div
+                  class="bg-white/20 rounded-xl p-3 sm:p-4 w-16 sm:w-24 border border-white/10"
+                >
+                  <span
+                    id="cd-days"
+                    class="block text-2xl sm:text-4xl font-bold text-white"
+                    >00</span
+                  ><span class="text-xs text-gray-300">Hari</span>
+                </div>
+                <div
+                  class="bg-white/20 rounded-xl p-3 sm:p-4 w-16 sm:w-24 border border-white/10"
+                >
+                  <span
+                    id="cd-hours"
+                    class="block text-2xl sm:text-4xl font-bold text-white"
+                    >00</span
+                  ><span class="text-xs text-gray-300">Jam</span>
+                </div>
+                <div
+                  class="bg-white/20 rounded-xl p-3 sm:p-4 w-16 sm:w-24 border border-white/10"
+                >
+                  <span
+                    id="cd-mins"
+                    class="block text-2xl sm:text-4xl font-bold text-white"
+                    >00</span
+                  ><span class="text-xs text-gray-300">Menit</span>
+                </div>
+                <div
+                  class="bg-white/20 rounded-xl p-3 sm:p-4 w-16 sm:w-24 border border-white/10"
+                >
+                  <span
+                    id="cd-secs"
+                    class="block text-2xl sm:text-4xl font-bold text-white"
+                    >00</span
+                  ><span class="text-xs text-gray-300">Detik</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Input -->
+            <div
+              id="search-container"
+              class="view-hidden max-w-md mx-auto transform transition-all"
+            >
+              <p
+                id="welcome-text"
+                class="text-white mb-6 italic text-sm sm:text-base"
+              ></p>
+              <form id="check-form" class="space-y-4">
+                <div>
+                  <input
+                    type="number"
+                    id="input-nisn"
+                    required
+                    placeholder="Masukkan NISN Anda"
+                    class="w-full px-5 py-4 rounded-xl text-center text-lg font-bold text-gray-800 focus:outline-none focus:ring-4 focus:ring-primary/50"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  id="btn-check"
+                  class="w-full bg-primary hover:bg-secondary text-white font-bold py-4 px-6 rounded-xl transition-colors duration-200 flex justify-center items-center gap-2 shadow-lg"
+                >
+                  <i data-lucide="search" class="w-5 h-5"></i> Cek Kelulusan
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: RESULT -->
+      <div
+        id="view-result"
+        class="flex-grow flex flex-col items-center justify-center bg-gray-50 p-4 view-hidden"
+      >
+        <div
+          class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+        >
+          <div id="result-header" class="p-6 text-center text-white">
+            <i
+              id="result-icon"
+              data-lucide="check-circle"
+              class="w-16 h-16 mx-auto mb-2 text-white"
+            ></i>
+            <h2 id="result-title" class="text-3xl font-bold mb-1">SELAMAT!</h2>
+            <!-- Bagian ini sekarang akan di-update secara dinamis oleh JavaScript -->
+            <p id="result-subtitle" class="text-lg opacity-90 font-medium">
+              Anda Dinyatakan LULUS
+            </p>
+          </div>
+          <div class="p-6 sm:p-8">
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-sm sm:text-base"
+            >
+              <div>
+                <p class="text-gray-500 font-medium text-xs uppercase">
+                  Nama Lengkap
+                </p>
+                <p
+                  id="res-nama"
+                  class="font-bold text-gray-800 text-lg border-b pb-1"
+                ></p>
+              </div>
+              <div>
+                <p class="text-gray-500 font-medium text-xs uppercase">NISN</p>
+                <p
+                  id="res-id"
+                  class="font-semibold text-gray-800 border-b pb-1"
+                ></p>
+              </div>
+              <div>
+                <p class="text-gray-500 font-medium text-xs uppercase">
+                  Tempat, Tanggal Lahir
+                </p>
+                <p
+                  id="res-ttl"
+                  class="font-semibold text-gray-800 border-b pb-1"
+                ></p>
+              </div>
+              <div>
+                <p class="text-gray-500 font-medium text-xs uppercase">
+                  Kelas / Jurusan
+                </p>
+                <p
+                  id="res-kelas"
+                  class="font-semibold text-gray-800 border-b pb-1"
+                ></p>
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                id="btn-download-skl"
+                class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors view-hidden shadow-md"
+              >
+                <i data-lucide="download" class="w-5 h-5"></i> Unduh SKL (JPG)
+              </button>
+              <button
+                id="btn-back"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors"
+              >
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Kembali
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: VERIFY (HALAMAN SAAT QR CODE DI-SCAN) -->
+      <div
+        id="view-verify"
+        class="flex-grow flex flex-col items-center justify-center bg-gray-100 p-4 view-hidden"
+      >
+        <div
+          class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden text-center p-8 border-t-8"
+          id="verify-card"
+        >
+          <div
+            id="verify-icon-container"
+            class="mx-auto w-20 h-20 rounded-full flex items-center justify-center mb-4"
+          >
+            <i
+              id="verify-icon"
+              data-lucide="shield-check"
+              class="w-10 h-10 text-white"
+            ></i>
+          </div>
+          <h2 id="verify-title" class="text-2xl font-bold text-gray-800 mb-2">
+            Verifikasi SKL
+          </h2>
+          <p id="verify-status" class="text-gray-500 mb-6 font-medium">
+            Memeriksa keaslian dokumen di database...
+          </p>
+
+          <!-- Box Informasi Jika Valid -->
+          <div
+            id="verify-details"
+            class="text-left bg-gray-50 p-5 rounded-xl space-y-4 view-hidden border"
+          >
+            <div
+              class="bg-blue-50 border border-blue-200 text-blue-800 p-3 rounded-lg text-sm mb-2 text-center font-medium"
+            >
+              Sistem menyatakan bahwa Surat Keterangan Lulus ini RESMI
+              dikeluarkan oleh sekolah.
+            </div>
+            <div>
+              <span class="text-xs text-gray-500 block uppercase tracking-wider"
+                >Nama Siswa</span
+              >
+              <span
+                id="v-nama"
+                class="font-bold text-gray-800 text-lg block"
+              ></span>
+            </div>
+            <div>
+              <span class="text-xs text-gray-500 block uppercase tracking-wider"
+                >NISN / Kelas</span
+              >
+              <span
+                id="v-nisn"
+                class="font-semibold text-gray-700 block"
+              ></span>
+            </div>
+            <div>
+              <span class="text-xs text-gray-500 block uppercase tracking-wider"
+                >Status Kelulusan</span
+              >
+              <span
+                id="v-status"
+                class="inline-block px-4 py-1.5 rounded-full text-sm font-bold mt-1"
+              ></span>
+            </div>
+          </div>
+          <a
+            href="?"
+            class="mt-8 inline-block text-primary font-medium hover:underline"
+            >Ke Halaman Utama</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+      <p>
+        &copy; <span id="footer-year"></span>
+        <span id="footer-name">Sekolah</span>. All rights reserved. | Supported
+        by Mentora.id
+      </p>
+    </footer>
+
+    <!-- =========================================================
+         KOTAK RENDER SKL (TEMPLATE SURAT RESMI SEBENARNYA)
+         ========================================================= -->
+    <div id="skl-export-box">
+      <!-- Bagian Kop Surat Berupa Gambar -->
+      <div style="text-align: center; margin-bottom: 30px">
+        <!-- SRC GAMBAR SESUAI PERMINTAAN -->
+        <img
+          id="skl-kop-image"
+          src="https://i.ibb.co.com/8D6ksc3N/Screenshot-2026-06-02-091107.png"
+          alt="Kop Surat"
+          crossorigin="anonymous"
+          style="
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: contain;
+          "
+        />
+      </div>
+
+      <!-- Judul Surat -->
+      <div style="text-align: center; margin-bottom: 35px">
+        <div
+          style="
+            font-size: 20px;
+            text-decoration: underline;
+            font-weight: bold;
+            margin-bottom: 2px;
+          "
+        >
+          SURAT KETERANGAN LULUS
+        </div>
+        <div style="font-size: 15px">
+          Nomor: <span id="skl-no-surat"></span>
+        </div>
+      </div>
+
+      <!-- Isi Surat -->
+      <div
+        style="
+          font-size: 16px;
+          line-height: 1.5;
+          text-align: justify;
+          margin-bottom: 20px;
+        "
+      >
+        <p style="text-indent: 40px">
+          Kepala
+          <span id="skl-school-text" style="font-weight: bold"
+            >NAMA SEKOLAH</span
+          >
+          selaku Ketua Penyelenggara Ujian Sekolah Tahun Pelajaran
+          <span id="skl-year" style="font-weight: bold">2025/2026</span>
+          berdasarkan kriteria kelulusan peserta didik dari satuan pendidikan,
+          dengan ini menerangkan bahwa:
+        </p>
+
+        <!-- Tabel Biodata -->
+        <table style="width: 90%; margin: 25px auto; font-size: 16px">
+          <tr>
+            <td style="width: 200px; padding: 5px 0">Nama Lengkap</td>
+            <td style="width: 20px">:</td>
+            <td
+              id="skl-val-nama"
+              style="font-weight: bold; text-transform: uppercase"
+            ></td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0">Tempat, Tanggal Lahir</td>
+            <td>:</td>
+            <td id="skl-val-ttl">-</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0">NISN</td>
+            <td>:</td>
+            <td id="skl-val-nisn"></td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 0">Kelas / Jurusan</td>
+            <td>:</td>
+            <td id="skl-val-kelas"></td>
+          </tr>
+        </table>
+
+        <p style="text-indent: 40px">
+          Berdasarkan hasil Keputusan Rapat Pleno Dewan Guru tentang Kelulusan
+          Peserta Didik Kelas <span id="skl-val-kelas-text"></span>, maka siswa
+          tersebut di atas dinyatakan:
+        </p>
+
+        <!-- Kotak Status Kelulusan -->
+        <div style="text-align: center; margin: 35px 0">
+          <span
+            id="skl-val-status-box"
+            style="
+              font-size: 28px;
+              font-weight: bold;
+              letter-spacing: 12px;
+              border: 3px solid #000;
+              display: inline-block;
+              padding: 12px 60px;
+              text-transform: uppercase;
+            "
+            >L U L U S</span
+          >
+        </div>
+
+        <p style="text-indent: 40px" id="skl-closing-text">
+          Surat Keterangan Lulus ini berlaku sementara sampai dengan
+          diterbitkannya Ijazah yang sah. Demikian surat keterangan ini dibuat
+          dengan sesungguhnya agar dapat dipergunakan sebagaimana mestinya.
+        </p>
+      </div>
+
+      <!-- Bagian Tanda Tangan -->
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-top: 50px;
+        "
+      >
+        <!-- Kiri: Ruang Kosong / Pas Foto (Jika Ada) -->
+        <div
+          style="
+            width: 120px;
+            height: 160px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #888;
+            margin-left: 20px;
+          "
+        >
+          Pas Foto<br />3 x 4
+        </div>
+
+        <!-- Kanan: Tanda Tangan -->
+        <div style="text-align: left; width: 320px">
+          <div style="margin-bottom: 5px">
+            <span id="skl-city">Kota</span>, <span id="skl-date"></span>
+          </div>
+          <div style="margin-bottom: 5px">Kepala Sekolah,</div>
+
+          <!-- QR Code MENGGUNAKAN API (img tag) -->
+          <div style="margin: 15px 0">
+            <img
+              id="qr-image"
+              src=""
+              alt="QR Code"
+              crossorigin="anonymous"
+              style="width: 80px; height: 80px; display: none"
+            />
+          </div>
+
+          <div
+            style="font-weight: bold; text-decoration: underline"
+            id="skl-kepsek"
+          >
+            Nama Kepala Sekolah
+          </div>
+          <div>NIP. <span id="skl-nip"></span></div>
+        </div>
+      </div>
+
+      <!-- Footer Surat -->
+      <div
+        style="
+          margin-top: 70px;
+          font-size: 10px;
+          color: #555;
+          text-align: center;
+          font-family: Arial, sans-serif;
+        "
+      >
+        <hr
+          style="border: none; border-top: 1px dashed #ccc; margin-bottom: 10px"
+        />
+        Dokumen ini ditandatangani secara digital. Pindai QR Code untuk
+        memverifikasi keaslian dokumen di database sekolah.
+        <br />ID Verifikasi:
+        <span id="skl-val-token" style="font-family: monospace"></span>
+      </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+      lucide.createIcons();
+      dayjs.locale("id"); // Set locale indonesia untuk DayJS
+
+      // PENTING: GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbyNOFPjSP3m0KDQ0WkfQi0FGw06nqsaaBGKsWGRxy07sdrfI5bqmc_aGVfuo5I5_mN52Q/exec";
+
+      let appConfig = {};
+      let currentStudent = null;
+
+      const vLoading = document.getElementById("view-loading");
+      const vHome = document.getElementById("view-home");
+      const vResult = document.getElementById("view-result");
+      const vVerify = document.getElementById("view-verify");
+
+      function initRouter() {
+        const params = new URLSearchParams(window.location.search);
+        const verifyId = params.get("id");
+
+        if (verifyId) {
+          showView(vVerify);
+          handleVerification(verifyId);
+        } else {
+          showView(vLoading);
+          loadAppConfig();
+        }
+      }
+
+      function showView(element) {
+        vLoading.classList.add("view-hidden");
+        vHome.classList.add("view-hidden");
+        vResult.classList.add("view-hidden");
+        vVerify.classList.add("view-hidden");
+        element.classList.remove("view-hidden");
+      }
+
+      async function fetchAPI(action, params = {}) {
+        if (!SCRIPT_URL) {
+          // Mock Data jika URL belum diisi
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              if (action === "config")
+                resolve({
+                  success: true,
+                  data: {
+                    APP_NAME: "SMA Negeri 1 Nusantara",
+                    LOGO_URL:
+                      "https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_Tut_Wuri_Handayani.png",
+                    MAIN_COLOR: "#1d4ed8",
+                    SECONDARY_COLOR: "#1e3a8a",
+                    BG_IMAGE:
+                      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070",
+                    TAHUN_AJARAN: "2025/2026",
+                    WAKTU_PENGUMUMAN: dayjs()
+                      .add(5, "second")
+                      .format("YYYY-MM-DD HH:mm:ss"),
+                    SAMBUTAN: "Selamat datang di portal kelulusan resmi.",
+                    NAMA_KEPSEK: "Dr. Budi Santoso, M.Pd",
+                    NIP_KEPSEK: "19750512 200003 1 012",
+                    KOTA: "Jakarta",
+                    ALAMAT_SEKOLAH:
+                      "Jl. Pendidikan Nasional No. 1, Jakarta Pusat",
+                    WEB_SEKOLAH: "www.sman1nusantara.sch.id",
+                    NOMOR_SURAT: "421.3/045/SMAN1/2026",
+                    TEXT_PENUTUP:
+                      "Surat Keterangan Lulus ini bersifat sah dan dapat digunakan untuk keperluan pendaftaran.",
+                  },
+                });
+              if (action === "check")
+                resolve({
+                  success: true,
+                  data: {
+                    nisn: params.nisn,
+                    nama: "AHMAD FAUZAN",
+                    tempat_lahir: "Jakarta",
+                    tanggal_lahir: "15 Agustus 2008",
+                    kelas: "XII MIPA 1",
+                    jurusan: "MIPA",
+                    status: "LULUS",
+                    token: "VER-123456",
+                  },
+                });
+              if (action === "verify")
+                resolve({
+                  success: true,
+                  data: {
+                    nama: "AHMAD FAUZAN",
+                    nisn: "0051234567",
+                    kelas: "XII MIPA 1",
+                    status: "LULUS",
+                  },
+                });
+            }, 500);
+          });
+        }
+
+        try {
+          let url = new URL(SCRIPT_URL);
+          url.searchParams.append("action", action);
+          for (let key in params) url.searchParams.append(key, params[key]);
+          const response = await fetch(url.toString());
+          return await response.json();
+        } catch (error) {
+          console.error("API Error:", error);
+          return { success: false, message: "Gagal terhubung ke server." };
+        }
+      }
+
+      async function loadAppConfig() {
+        const res = await fetchAPI("config");
+        if (res.success) {
+          const cleanConfig = {};
+          for (let key in res.data) {
+            if (key) cleanConfig[key.trim()] = res.data[key];
+          }
+          appConfig = cleanConfig;
+          applyConfigToUI();
+          initCountdown();
+          showView(vHome);
+        } else {
+          Swal.fire("Error System", "Gagal memuat data.", "error");
+        }
+      }
+
+      function applyConfigToUI() {
+        document.documentElement.style.setProperty(
+          "--color-primary",
+          appConfig.MAIN_COLOR || "#2563eb",
+        );
+        document.documentElement.style.setProperty(
+          "--color-secondary",
+          appConfig.SECONDARY_COLOR || "#1e40af",
+        );
+        if (appConfig.BG_IMAGE)
+          document.documentElement.style.setProperty(
+            "--bg-image",
+            `url('${appConfig.BG_IMAGE}')`,
+          );
+
+        document.title = appConfig.APP_NAME || "Pengumuman Kelulusan";
+        document.getElementById("nav-title").textContent =
+          appConfig.APP_NAME || "E-Kelulusan";
+        document.getElementById("nav-year").textContent =
+          appConfig.TAHUN_AJARAN || "Tahun";
+        document.getElementById("hero-year").textContent =
+          appConfig.TAHUN_AJARAN || "Tahun";
+        document.getElementById("welcome-text").textContent =
+          appConfig.SAMBUTAN || "";
+        document.getElementById("footer-year").textContent =
+          new Date().getFullYear();
+        document.getElementById("footer-name").textContent =
+          appConfig.APP_NAME || "Sekolah";
+
+        if (appConfig.LOGO_URL) {
+          document.getElementById("nav-logo").src = appConfig.LOGO_URL;
+          document.getElementById("nav-logo").classList.remove("hidden");
+          document.getElementById("hero-logo").src = appConfig.LOGO_URL;
+          document.getElementById("hero-logo").classList.remove("hidden");
+          // HAPUS skl-logo karena kita pakai gambar utuh kop surat sekarang
+        }
+      }
+
+      function initCountdown() {
+        const targetDate = dayjs(appConfig.WAKTU_PENGUMUMAN);
+        const cdContainer = document.getElementById("countdown-container");
+        const searchContainer = document.getElementById("search-container");
+
+        const timer = setInterval(() => {
+          const diff = targetDate.diff(dayjs());
+          if (diff <= 0) {
+            clearInterval(timer);
+            cdContainer.style.display = "none";
+            searchContainer.classList.remove("view-hidden");
+          } else {
+            document.getElementById("cd-days").textContent = String(
+              Math.floor(diff / 86400000),
+            ).padStart(2, "0");
+            document.getElementById("cd-hours").textContent = String(
+              Math.floor((diff % 86400000) / 3600000),
+            ).padStart(2, "0");
+            document.getElementById("cd-mins").textContent = String(
+              Math.floor((diff % 3600000) / 60000),
+            ).padStart(2, "0");
+            document.getElementById("cd-secs").textContent = String(
+              Math.floor((diff % 60000) / 1000),
+            ).padStart(2, "0");
+          }
+        }, 1000);
+      }
+
+      document
+        .getElementById("check-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const nisn = document.getElementById("input-nisn").value;
+          const btn = document.getElementById("btn-check");
+          const oriBtn = btn.innerHTML;
+          btn.innerHTML = "Memproses...";
+          btn.disabled = true;
+
+          const res = await fetchAPI("check", { nisn: nisn });
+          btn.innerHTML = oriBtn;
+          btn.disabled = false;
+          lucide.createIcons();
+
+          if (res.success) {
+            currentStudent = res.data;
+            document.getElementById("res-nama").textContent =
+              currentStudent.nama;
+            document.getElementById("res-id").textContent = currentStudent.nisn;
+            document.getElementById("res-ttl").textContent =
+              `${currentStudent.tempat_lahir}, ${currentStudent.tanggal_lahir}`;
+            document.getElementById("res-kelas").textContent =
+              `${currentStudent.kelas} / ${currentStudent.jurusan}`;
+
+            // LOGIKA DINAMIS TIGA STATUS: LULUS, TIDAK LULUS, DITUNDA
+            const status = String(currentStudent.status).toUpperCase().trim();
+            const header = document.getElementById("result-header");
+            const btnDl = document.getElementById("btn-download-skl");
+            const resultTitle = document.getElementById("result-title");
+            const resultSubtitle = document.getElementById("result-subtitle");
+            const resultIcon = document.getElementById("result-icon");
+
+            if (status === "LULUS") {
+              header.className = "p-6 text-center text-white bg-green-600";
+              resultIcon.setAttribute("data-lucide", "check-circle");
+              resultTitle.textContent = "SELAMAT!";
+              resultSubtitle.textContent = "Anda Dinyatakan LULUS";
+              btnDl.classList.remove("view-hidden"); // Bisa Download SKL
+            } else if (status === "DITUNDA") {
+              header.className = "p-6 text-center text-white bg-yellow-500";
+              resultIcon.setAttribute("data-lucide", "alert-circle");
+              resultTitle.textContent = "INFORMASI";
+              resultSubtitle.textContent = "Status Kelulusan Anda DITUNDA";
+              btnDl.classList.add("view-hidden"); // Tidak Bisa Download SKL
+            } else {
+              header.className = "p-6 text-center text-white bg-red-600";
+              resultIcon.setAttribute("data-lucide", "x-circle");
+              resultTitle.textContent = "MOHON MAAF";
+              resultSubtitle.textContent = "Anda Dinyatakan TIDAK LULUS";
+              btnDl.classList.add("view-hidden"); // Tidak Bisa Download SKL
+            }
+
+            showView(vResult);
+            lucide.createIcons();
+          } else {
+            Swal.fire("Oops...", res.message, "error");
+          }
+        });
+
+      document
+        .getElementById("btn-back")
+        .addEventListener("click", () => showView(vHome));
+
+      // ================= FIX TOTAL UNTUK DOWNLOAD SKL DENGAN API QR =================
+      document
+        .getElementById("btn-download-skl")
+        .addEventListener("click", async () => {
+          if (!currentStudent) return;
+          const btn = document.getElementById("btn-download-skl");
+          const originalHtml = btn.innerHTML;
+          btn.innerHTML = "Membuat Dokumen...";
+          btn.disabled = true;
+
+          try {
+            // 1. Isi Data Template Resmi
+            // id #skl-school-name dll sudah dihapus dari HTML karena pakai kop gambar
+            document.getElementById("skl-school-text").textContent =
+              appConfig.APP_NAME || "";
+            document.getElementById("skl-no-surat").textContent =
+              appConfig.NOMOR_SURAT || "-";
+            document.getElementById("skl-year").textContent =
+              appConfig.TAHUN_AJARAN || "";
+            document.getElementById("skl-closing-text").textContent =
+              appConfig.TEXT_PENUTUP ||
+              "Demikian surat keterangan ini diberikan.";
+
+            document.getElementById("skl-val-nama").textContent =
+              currentStudent.nama;
+            document.getElementById("skl-val-ttl").textContent =
+              `${currentStudent.tempat_lahir}, ${currentStudent.tanggal_lahir}`;
+            document.getElementById("skl-val-nisn").textContent =
+              currentStudent.nisn;
+            document.getElementById("skl-val-kelas").textContent =
+              `${currentStudent.kelas} / ${currentStudent.jurusan}`;
+            // Untuk penempatan di kalimat paragraf
+            document.getElementById("skl-val-kelas-text").textContent =
+              currentStudent.kelas;
+            document.getElementById("skl-val-token").textContent =
+              currentStudent.token;
+
+            // Masukkan Status dengan format spasi yang elegan (L U L U S)
+            const boxStatus = String(currentStudent.status)
+              .toUpperCase()
+              .split("")
+              .join(" ");
+            document.getElementById("skl-val-status-box").textContent =
+              boxStatus;
+
+            document.getElementById("skl-city").textContent =
+              appConfig.KOTA || "";
+
+            document.getElementById("skl-date").textContent =
+              dayjs().format("DD MMMM YYYY");
+            document.getElementById("skl-kepsek").textContent =
+              appConfig.NAMA_KEPSEK || "";
+            document.getElementById("skl-nip").textContent =
+              appConfig.NIP_KEPSEK || "";
+
+            // 2. Generate QR Code Menggunakan api.qrserver.com
+            const verifyUrl = `${window.location.href.split("?")[0]}?id=${currentStudent.token}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(verifyUrl)}&margin=0`;
+
+            const qrImg = document.getElementById("qr-image");
+            qrImg.crossOrigin = "Anonymous"; // Penting untuk html2canvas
+            qrImg.src = qrApiUrl;
+            qrImg.style.display = "inline-block";
+
+            // 3. TUNGGU GAMBAR QR SELESAI DI-LOAD SEBELUM RENDER KE JPG
+            await new Promise((resolve) => {
+              qrImg.onload = resolve;
+              qrImg.onerror = resolve; // Tetap lanjut jika error (misal internet down)
+            });
+
+            // 4. Render Menggunakan html2canvas
+            const node = document.getElementById("skl-export-box");
+
+            html2canvas(node, {
+              scale: 2, // Kualitas Resolusi Tinggi (Retina)
+              useCORS: true, // Izinkan ambil logo & QR dari pihak ketiga
+              allowTaint: false,
+              backgroundColor: "#ffffff",
+            })
+              .then((canvas) => {
+                // Konversi kanvas ke JPG lalu Download
+                const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+                const link = document.createElement("a");
+                link.download = `SKL_${currentStudent.nama.replace(/\s+/g, "_")}_${currentStudent.nisn}.jpg`;
+                link.href = dataUrl;
+                link.click();
+
+                Swal.fire(
+                  "Berhasil",
+                  "Surat Keterangan Lulus resmi telah diunduh.",
+                  "success",
+                );
+              })
+              .catch((err) => {
+                console.error("Canvas Error:", err);
+                Swal.fire(
+                  "Gagal",
+                  "Terjadi kesalahan saat memproses gambar canvas.",
+                  "error",
+                );
+              });
+          } catch (err) {
+            console.error("Proses Error:", err);
+            Swal.fire("Gagal", "Sistem gagal membuat dokumen.", "error");
+          } finally {
+            btn.innerHTML = originalHtml;
+            btn.disabled = false;
+            lucide.createIcons();
+          }
+        });
+
+      // ================= LOGIKA HALAMAN VERIFIKASI =================
+      async function handleVerification(token) {
+        const res = await fetchAPI("verify", { id: token });
+        const vStatus = document.getElementById("verify-status");
+        const vCard = document.getElementById("verify-card");
+
+        if (res.success) {
+          // Jika Dokumen Terdaftar (Valid)
+          vStatus.textContent = "Dokumen Valid dan Terdaftar!";
+          vStatus.classList.replace("text-gray-500", "text-green-600");
+          vCard.classList.replace("border-t-8", "border-t-green-500");
+
+          document
+            .getElementById("verify-icon")
+            .setAttribute("data-lucide", "check-circle");
+          document
+            .getElementById("verify-icon-container")
+            .classList.add("bg-green-500");
+
+          document.getElementById("v-nama").textContent = res.data.nama;
+          document.getElementById("v-nisn").textContent =
+            `${res.data.nisn} / ${res.data.kelas}`;
+
+          const statusElem = document.getElementById("v-status");
+          statusElem.textContent = res.data.status;
+
+          // Warna lencana berdasarkan status (Lulus = Hijau, Tidak = Merah)
+          if (res.data.status.toUpperCase() === "LULUS") {
+            statusElem.classList.add("bg-green-100", "text-green-800");
+          } else {
+            statusElem.classList.add("bg-red-100", "text-red-800");
+          }
+
+          document
+            .getElementById("verify-details")
+            .classList.remove("view-hidden");
+        } else {
+          // Jika Token Palsu / Salah
+          vStatus.textContent = "Peringatan! Dokumen Palsu / Tidak Ditemukan";
+          vStatus.classList.replace("text-gray-500", "text-red-600");
+          vCard.classList.replace("border-t-8", "border-t-red-500");
+
+          document
+            .getElementById("verify-icon")
+            .setAttribute("data-lucide", "x-octagon");
+          document
+            .getElementById("verify-icon-container")
+            .classList.add("bg-red-500");
+        }
+
+        lucide.createIcons(); // Render ulang ikon setelah manipulasi DOM
+      }
+
+      window.onload = initRouter;
+    </script>
+  </body>
+</html>
